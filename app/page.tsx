@@ -110,7 +110,7 @@ export default function ShieldUpPro() {
           <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.5, type: 'spring' }}
             className="inline-flex items-center gap-3 bg-gradient-to-r from-purple-600 to-fuchsia-600 border border-white/20 px-6 py-2 rounded-full mb-10 shadow-[0_0_30px_rgba(168,85,247,0.3)]">
             <Gift className="w-5 h-5 text-white animate-bounce" />
-            <span className="text-xs font-black tracking-widest uppercase text-white">פיילוט לזמן מוגבל: חודש שלם של שיווק ללא עלות</span>
+            <span className="text-xs font-black tracking-widest uppercase text-white">פיילוט לזמן מוגבל: חודש שלם של שיווק ללא עלות תפעול</span>
           </motion.div>
 
           <h1 className="text-6xl md:text-[140px] font-black leading-[0.85] tracking-tighter italic mb-10">
@@ -125,7 +125,7 @@ export default function ShieldUpPro() {
           <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
             <button onClick={() => scrollToSection('contact')} className="group relative bg-white text-black px-12 py-6 rounded-2xl overflow-hidden shadow-2xl transition-transform active:scale-95">
               <span className="relative text-xl font-black italic flex items-center gap-3">
-                הפעל חודש ניסיון חינם <Zap size={20} className="fill-current" />
+                חודש נסיון ללא עלות תפעול! <Zap size={20} className="fill-current" />
               </span>
             </button>
             <button onClick={() => scrollToSection('stats')} className="text-lg font-bold text-white/60 hover:text-white transition-colors">נתוני חדירה לשוק</button>
@@ -171,12 +171,12 @@ export default function ShieldUpPro() {
 
           <div className="lg:w-1/2 w-full">
             <form onSubmit={handleSubmit} className="relative p-12 bg-white/[0.02] border border-white/10 rounded-[48px] backdrop-blur-xl shadow-2xl">
-              <div className="absolute top-0 right-12 -translate-y-1/2 bg-purple-600 text-[10px] font-black tracking-widest px-4 py-1 rounded-full uppercase italic">בקשת פיילוט ללא עלות</div>
+              <div className="absolute top-0 right-12 -translate-y-1/2 bg-purple-600 text-[10px] font-black tracking-widest px-4 py-1 rounded-full uppercase italic">חודש נסיון ללא עלות תפעול!</div>
               
               <div className="space-y-6">
                 <input name="fullName" type="text" required placeholder="שם מלא / חברת אבטחה" className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:border-purple-500 outline-none text-right transition-all" />
-                <input name="phone" type="tel" required placeholder="טלפון ישיר למקבלי החלטות" className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:border-purple-500 outline-none text-right transition-all" />
-                <input name="email" type="email" required placeholder="אימייל ארגוני" className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:border-purple-500 outline-none text-right transition-all" />
+                <input name="phone" type="tel" required placeholder="מס' טלפון" className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:border-purple-500 outline-none text-right transition-all" />
+                <input name="email" type="email" required placeholder="אימייל" className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:border-purple-500 outline-none text-right transition-all" />
                 
                 {/* --- STATUS MESSAGE --- */}
                 <AnimatePresence>
@@ -200,7 +200,7 @@ export default function ShieldUpPro() {
                   disabled={isSubmitting}
                   className="w-full bg-white text-black py-6 rounded-2xl text-xl font-black hover:bg-purple-600 hover:text-white transition-all shadow-2xl active:scale-95 disabled:opacity-50 flex justify-center items-center gap-3"
                 >
-                  {isSubmitting ? <Loader2 className="animate-spin" /> : 'שריין חודש ניסיון חינם'}
+                  {isSubmitting ? <Loader2 className="animate-spin" /> : 'שריין חודש ניסיון חינם!'}
                 </button>
               </div>
             </form>
