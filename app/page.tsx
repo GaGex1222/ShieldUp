@@ -95,8 +95,6 @@ export default function ShieldUpPro() {
 
           <div className="hidden lg:flex gap-10 items-center text-sm font-bold tracking-tight text-white/40">
             <button onClick={() => scrollToSection('stats')} className="hover:text-purple-400 transition-all">מדדי עוצמה</button>
-            <button onClick={() => scrollToSection('strategy')} className="hover:text-purple-400 transition-all">מודל עבודה</button>
-            <button onClick={() => scrollToSection('offer')} className="hover:text-purple-400 transition-all">הצעה מבצעית</button>
             <button onClick={() => scrollToSection('contact')} className="bg-purple-600 text-white px-7 py-3 rounded-full hover:bg-white hover:text-black transition-all font-black text-xs uppercase">
               הפעל חדירה לשוק
             </button>
@@ -140,7 +138,7 @@ export default function ShieldUpPro() {
             { icon: <Activity />, label: "דיוק המרת לידים", value: "14.2%", desc: "אופטימיזציית אלגוריתם ייעודית לתחום המיגון" },
             { icon: <Target />, label: "בסיס נתוני רכש", value: "85K+", desc: "גישה ישירה לקב'טים ומנהלי תפעול מפולחים" },
             { icon: <BarChart2 />, label: "תקציבים מנוהלים", value: "₪4M+", desc: "החזר השקעה (ROI) הגבוה ביותר בענף האבטחה" },
-            { icon: <ShieldCheck />, label: "מותגי מיגון מובילים", value: "120+", desc: "חברות שבחרו לשלוט בשוק בעזרת ShieldUp" }
+            { icon: <ShieldCheck />, label: "מותגי מיגון מובילים", value: "30+", desc: "חברות שבחרו לשלוט בשוק בעזרת ShieldUp" }
           ].map((stat, i) => (
             <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
               className="p-8 bg-white/[0.03] border border-white/10 rounded-[32px] backdrop-blur-xl group hover:border-purple-500/50 transition-all">
@@ -158,7 +156,7 @@ export default function ShieldUpPro() {
         <div className="container mx-auto max-w-6xl flex flex-col lg:flex-row gap-20 items-center">
           <div className="lg:w-1/2 text-right">
             <h2 className="text-6xl md:text-8xl font-black italic mb-10 text-white">תפוס<br/><span className="text-purple-600 font-black">פיקוד.</span></h2>
-            <p className="text-white/30 text-xl mb-12 font-bold underline underline-offset-8 decoration-purple-500">החודש הראשון הוא פיילוט על חשבוננו - ללא סיכון.</p>
+            <p className="text-white/30 text-xl mb-12 font-bold underline underline-offset-8 decoration-purple-500">בחודש הראשון - העלות תפעול היא עלינו!</p>
             <div className="space-y-6">
               <div className="flex items-center justify-end gap-5 text-xl font-bold text-white/40 hover:text-white transition-colors cursor-pointer group">
                 gald12123434@gmail.com <div className="p-3 bg-white/5 rounded-xl group-hover:bg-purple-600 transition-all"><Mail size={24} /></div>
