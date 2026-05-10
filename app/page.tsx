@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'fra
 import { 
   Target, Zap, BarChart2, ShieldCheck, Mail, Phone, Activity, 
   Radar, Gift, CheckCircle2, Loader2, AlertCircle, TrendingUp, 
-  UserCircle2, Quote, ArrowUpRight, Eye
+  UserCircle2, Quote, ArrowUpRight, Eye, ScanEye 
 } from 'lucide-react';
 
 export default function ShieldUpPro() {
@@ -95,6 +95,7 @@ export default function ShieldUpPro() {
 
           <div className="hidden lg:flex gap-10 items-center text-sm font-bold tracking-tight text-white/40">
             <button onClick={() => scrollToSection('why-us')} className="hover:text-purple-400 transition-all">למה אנחנו</button>
+            <button onClick={() => scrollToSection('ads-preview')} className="hover:text-purple-400 transition-all">קריאייטיב</button>
             <button onClick={() => scrollToSection('analytics')} className="hover:text-purple-400 transition-all">ניתוח ביצועים</button>
             <button onClick={() => scrollToSection('reviews')} className="hover:text-purple-400 transition-all">לקוחות ממליצים</button>
             <button onClick={() => scrollToSection('contact')} className="bg-purple-600 text-white px-7 py-3 rounded-full hover:bg-white hover:text-black transition-all font-black text-xs uppercase">
@@ -181,7 +182,85 @@ export default function ShieldUpPro() {
         </div>
       </section>
 
-      {/* --- SECTION 2: PERFORMANCE ANALYTICS (GRAPHS) --- */}
+      {/* --- SECTION 2: VISUAL INTELLIGENCE (AD PREVIEWS) --- */}
+{/* --- SECTION 2: VISUAL INTELLIGENCE (AD PREVIEWS) --- */}
+      <section id="ads-preview" className="py-24 relative z-10 container mx-auto px-6">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6 text-right">
+          <div className="max-w-2xl">
+            <h2 className="text-4xl md:text-7xl font-black italic mb-4">מודיעין <span className="text-purple-600">חזותי.</span></h2>
+            <p className="text-white/40 text-xl font-medium tracking-tight italic">קריאייטיב ממוקד מטרה שנועד לשבור את הכלים:</p>
+          </div>
+          <div className="flex items-center gap-2 bg-purple-600/10 border border-purple-500/20 px-4 py-2 rounded-lg text-[10px] font-mono text-purple-400 uppercase tracking-tighter">
+            <ScanEye size={14} /> AD_CREATIVE_DECODE_03
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {[
+            {
+              src: "/camera_ad.png", // ADD FIRST IMAGE PATH HERE
+              title: "מודעת פריצה לשוק 1",
+              desc: "אופטימיזציה למעורבות מקסימלית של קב\"טים"
+            },
+            {
+              src: "/ad-2.png", // ADD SECOND IMAGE PATH HERE
+              title: "מודעת פריצה לשוק 2",
+              desc: "טרגוט מנהלי רכש וקניינים"
+            },
+            {
+              src: "/ad-3.png", // ADD THIRD IMAGE PATH HERE
+              title: "מודעת פריצה לשוק 3",
+              desc: "קריאייטיב חודר שוק מוסדי"
+            }
+          ].map((ad, i) => (
+            <motion.div 
+              key={i}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="group relative aspect-[4/5] bg-white/[0.03] border border-white/10 rounded-[32px] overflow-hidden cursor-crosshair"
+            >
+              {/* Image Layer */}
+              <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
+                <img 
+                  src={ad.src} 
+                  alt={ad.title}
+                  className="w-full h-full object-cover" 
+                />
+              </div>
+
+              {/* Tactical Overlays */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
+              
+              {/* Scan Line Animation */}
+              <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
+                <motion.div 
+                  animate={{ top: ['0%', '100%', '0%'] }} 
+                  transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                  className="absolute left-0 right-0 h-[2px] bg-purple-500/50 shadow-[0_0_15px_rgba(168,85,247,0.8)] z-20"
+                />
+              </div>
+
+              {/* Text Content */}
+              <div className="absolute bottom-8 right-8 left-8 text-right">
+                <div className="flex items-center justify-end gap-2 mb-2">
+                  <span className="text-[10px] font-mono text-purple-400 uppercase tracking-widest">Target_Reached</span>
+                  <div className="h-1 w-8 bg-purple-600 rounded-full" />
+                </div>
+                <h4 className="text-xl font-black italic text-white">{ad.title}</h4>
+                <p className="text-white/40 text-xs mt-2 font-medium">{ad.desc}</p>
+              </div>
+
+              {/* HUD Accents */}
+              <div className="absolute top-6 left-6 border-t border-l border-white/20 w-4 h-4" />
+              <div className="absolute bottom-6 right-6 border-b border-r border-white/20 w-4 h-4" />
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* --- SECTION 3: PERFORMANCE ANALYTICS --- */}
       <section id="analytics" className="py-24 relative z-10 bg-white/[0.01] border-y border-white/5">
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
@@ -234,6 +313,7 @@ export default function ShieldUpPro() {
         </div>
       </section>
 
+      {/* --- SECTION 4: REVIEWS --- */}
       <section id="reviews" className="py-32 relative z-10 container mx-auto px-6">
         <div className="text-center mb-24">
           <h2 className="text-4xl md:text-6xl font-black italic mb-6 uppercase">מהשטח <span className="text-purple-600">לתוצאות.</span></h2>
@@ -272,13 +352,13 @@ export default function ShieldUpPro() {
               initial={{ opacity: 0, x: i % 2 === 0 ? 30 : -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="relative p-10 bg-white/[0.02] border border-white/5 rounded-[48px] backdrop-blur-3xl flex flex-col md:flex-row gap-8 items-start group hover:border-purple-600/30 transition-all"
+              className="relative p-10 bg-white/[0.02] border border-white/5 rounded-[48px] backdrop-blur-3xl flex flex-col md:flex-row gap-8 items-start group hover:border-purple-600/30 transition-all text-right"
             >
               <div className="w-16 h-16 rounded-2xl bg-purple-600/20 flex items-center justify-center text-purple-500 font-black shrink-0 border border-purple-500/20 group-hover:bg-purple-600 group-hover:text-white transition-all">
                 {review.image}
               </div>
               <div className="flex-1">
-                <Quote className="text-purple-600 mb-4 opacity-50" size={32} />
+                <Quote className="text-purple-600 mb-4 opacity-50 ml-auto" size={32} />
                 <p className="text-xl text-white/80 font-medium mb-8 leading-relaxed italic">"{review.quote}"</p>
                 <div className="pt-6 border-t border-white/5">
                   <div className="text-white font-black text-lg">{review.name}</div>
@@ -301,7 +381,7 @@ export default function ShieldUpPro() {
           ].map((stat, i) => (
             <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
               className="p-8 bg-white/[0.03] border border-white/10 rounded-[32px] backdrop-blur-xl group hover:border-purple-500/50 transition-all text-right">
-              <div className="text-purple-500 mb-6 group-hover:scale-110 transition-transform">{stat.icon}</div>
+              <div className="text-purple-500 mb-6 group-hover:scale-110 transition-transform ml-auto w-fit">{stat.icon}</div>
               <div className="text-4xl font-black mb-2 tracking-tight">{stat.value}</div>
               <div className="text-white font-bold text-sm mb-2 uppercase tracking-wider">{stat.label}</div>
               <div className="text-white/30 text-xs leading-relaxed">{stat.desc}</div>
@@ -341,12 +421,12 @@ export default function ShieldUpPro() {
                       initial={{ opacity: 0, height: 0 }} 
                       animate={{ opacity: 1, height: 'auto' }} 
                       exit={{ opacity: 0, height: 0 }}
-                      className={`flex items-center gap-2 text-sm font-bold p-4 rounded-xl ${
+                      className={`flex items-center justify-end gap-2 text-sm font-bold p-4 rounded-xl ${
                         status.type === 'success' ? 'text-emerald-400 bg-emerald-500/10' : 'text-rose-400 bg-rose-500/10'
                       }`}
                     >
-                      {status.type === 'success' ? <CheckCircle2 size={16} /> : <AlertCircle size={16} />}
                       {status.message}
+                      {status.type === 'success' ? <CheckCircle2 size={16} /> : <AlertCircle size={16} />}
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -368,7 +448,7 @@ export default function ShieldUpPro() {
         <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-10">
           <div className="text-xl font-black italic">SHIELDUP<span className="text-purple-600 font-black">PRO</span></div>
           <p className="text-white/20 text-xs font-bold">המומחים לשיווק חדירה בענף המיגון והאבטחה</p>
-          <div className="text-[10px] font-mono text-white/10 tracking-[0.5em] uppercase">// encrypted // secure_marketing // 2026</div>
+          <div className="text-[10px] font-mono text-white/10 tracking-[0.5em] uppercase text-center">// encrypted // secure_marketing // 2026</div>
         </div>
       </footer>
     </div>
