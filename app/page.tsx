@@ -187,11 +187,8 @@ export default function ShieldUpPro() {
       <section id="ads-preview" className="py-24 relative z-10 container mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6 text-right">
           <div className="max-w-2xl">
-            <h2 className="text-4xl md:text-7xl font-black italic mb-4">מודיעין <span className="text-purple-600">חזותי.</span></h2>
+            <h2 className="text-4xl md:text-7xl font-black italic mb-4">חלק מהפרסומות <span className="text-purple-600">שלנו.</span></h2>
             <p className="text-white/40 text-xl font-medium tracking-tight italic">קריאייטיב ממוקד מטרה שנועד לשבור את הכלים:</p>
-          </div>
-          <div className="flex items-center gap-2 bg-purple-600/10 border border-purple-500/20 px-4 py-2 rounded-lg text-[10px] font-mono text-purple-400 uppercase tracking-tighter">
-            <ScanEye size={14} /> AD_CREATIVE_DECODE_03
           </div>
         </div>
 
@@ -199,17 +196,17 @@ export default function ShieldUpPro() {
           {[
             {
               src: "/camera_ad.png", // ADD FIRST IMAGE PATH HERE
-              title: "מודעת פריצה לשוק 1",
+              title: "",
               desc: "אופטימיזציה למעורבות מקסימלית של קב\"טים"
             },
             {
-              src: "/ad-2.png", // ADD SECOND IMAGE PATH HERE
-              title: "מודעת פריצה לשוק 2",
+              src: "/alarm_system.png", // ADD SECOND IMAGE PATH HERE
+              title: "",
               desc: "טרגוט מנהלי רכש וקניינים"
             },
             {
-              src: "/ad-3.png", // ADD THIRD IMAGE PATH HERE
-              title: "מודעת פריצה לשוק 3",
+              src: "/fingerprint_lock.png", // ADD THIRD IMAGE PATH HERE
+              title: "",
               desc: "קריאייטיב חודר שוק מוסדי"
             }
           ].map((ad, i) => (
