@@ -222,10 +222,6 @@ export default function ShieldUpPro() {
                 />
               </div>
               <div className="absolute bottom-8 right-8 left-8 text-right">
-                <div className="flex items-center justify-end gap-2 mb-2">
-                  <span className="text-[10px] font-mono text-purple-400 uppercase tracking-widest">Target_Reached</span>
-                  <div className="h-1 w-8 bg-purple-600 rounded-full" />
-                </div>
                 <p className="text-white/40 text-xs mt-2 font-medium">{ad.desc}</p>
               </div>
               <div className="absolute top-6 left-6 border-t border-l border-white/20 w-4 h-4" />
