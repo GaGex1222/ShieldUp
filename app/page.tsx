@@ -192,25 +192,17 @@ export default function ShieldUpPro() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[
-            {
-              src: "/camera_ad.png", // ADD FIRST IMAGE PATH HERE
-              title: "",
-              desc: "אופטימיזציה למעורבות מקסימלית של קב\"טים"
-            },
-            {
-              src: "/alarm_system.png", // ADD SECOND IMAGE PATH HERE
-              title: "",
-              desc: "טרגוט מנהלי רכש וקניינים"
-            },
-            {
-              src: "/fingerprint_lock.png", // ADD THIRD IMAGE PATH HERE
-              title: "",
-              desc: "קריאייטיב חודר שוק מוסדי"
-            }
-          ].map((ad, i) => (
-            <motion.div 
+        {(() => {
+          const ads = [
+            { src: "/camera_ad.png",       desc: "אופטימיזציה למעורבות מקסימלית של קב\"טים" },
+            { src: "/alarm_system.png",    desc: "טרגוט מנהלי רכש וקניינים" },
+            { src: "/fingerprint_lock.png",desc: "קריאייטיב חודר שוק מוסדי" },
+            { src: "/bank1.png",           desc: "חדירה לסקטור הפיננסי והבנקאי" },
+            { src: "/bank2.png",           desc: "פרסום ממוקד לגופי אבטחה מוסדיים" },
+          ];
+
+          const AdCard = ({ ad, i }: { ad: typeof ads[0], i: number }) => (
+            <motion.div
               key={i}
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -218,43 +210,42 @@ export default function ShieldUpPro() {
               transition={{ delay: i * 0.1 }}
               className="group relative aspect-[4/5] bg-white/[0.03] border border-white/10 rounded-[32px] overflow-hidden cursor-crosshair"
             >
-              {/* Image Layer */}
               <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
-                <img 
-                  src={ad.src} 
-                  alt={ad.title}
-                  className="w-full h-full object-cover" 
-                />
+                <img src={ad.src} alt="" className="w-full h-full object-cover" />
               </div>
-
-              {/* Tactical Overlays */}
               <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
-              
-              {/* Scan Line Animation */}
               <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
-                <motion.div 
-                  animate={{ top: ['0%', '100%', '0%'] }} 
+                <motion.div
+                  animate={{ top: ['0%', '100%', '0%'] }}
                   transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
                   className="absolute left-0 right-0 h-[2px] bg-purple-500/50 shadow-[0_0_15px_rgba(168,85,247,0.8)] z-20"
                 />
               </div>
-
-              {/* Text Content */}
               <div className="absolute bottom-8 right-8 left-8 text-right">
                 <div className="flex items-center justify-end gap-2 mb-2">
                   <span className="text-[10px] font-mono text-purple-400 uppercase tracking-widest">Target_Reached</span>
                   <div className="h-1 w-8 bg-purple-600 rounded-full" />
                 </div>
-                <h4 className="text-xl font-black italic text-white">{ad.title}</h4>
                 <p className="text-white/40 text-xs mt-2 font-medium">{ad.desc}</p>
               </div>
-
-              {/* HUD Accents */}
               <div className="absolute top-6 left-6 border-t border-l border-white/20 w-4 h-4" />
               <div className="absolute bottom-6 right-6 border-b border-r border-white/20 w-4 h-4" />
             </motion.div>
-          ))}
-        </div>
+          );
+
+          return (
+            <div className="space-y-8">
+              {/* Row 1 — 3 cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                {ads.slice(0, 3).map((ad, i) => <AdCard key={i} ad={ad} i={i} />)}
+              </div>
+              {/* Row 2 — 2 cards centered */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 lg:w-2/3 mx-auto">
+                {ads.slice(3).map((ad, i) => <AdCard key={i + 3} ad={ad} i={i + 3} />)}
+              </div>
+            </div>
+          );
+        })()}
       </section>
 
       {/* --- SECTION 3: PERFORMANCE ANALYTICS --- */}
