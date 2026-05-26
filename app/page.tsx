@@ -259,9 +259,9 @@ export default function ShieldUpPro() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              { label: "מגזר תעשייתי", value: "240%+", data: [20, 35, 30, 70, 90], color: "from-purple-600 to-fuchsia-500" },
-              { label: "מוסדות ורשויות", value: "185%+", data: [15, 25, 50, 45, 80], color: "from-blue-600 to-purple-500" },
-              { label: "קמעונאות ופרטי", value: "310%+", data: [10, 40, 35, 85, 100], color: "from-fuchsia-600 to-pink-500" }
+              { label: "מגזר תעשייתי", value: "68%+", data: [20, 35, 30, 70, 90], color: "from-purple-600 to-fuchsia-500" },
+              { label: "מוסדות ורשויות", value: "51%+", data: [15, 25, 50, 45, 80], color: "from-blue-600 to-purple-500" },
+              { label: "קמעונאות ופרטי", value: "83%+", data: [10, 40, 35, 85, 100], color: "from-fuchsia-600 to-pink-500" }
             ].map((chart, i) => (
               <motion.div 
                 key={i}
@@ -309,25 +309,25 @@ export default function ShieldUpPro() {
             {
               name: "רוני אברהם",
               role: "מנכ\"ל מערכות מיגון",
-              quote: "לא האמנתי שדיגיטל יכול להביא לקוחות בסדר גודל כזה. סגרנו 3 פרויקטים של מוסדות חינוך בשבוע אחד לאחר הפעלת המערך.",
+              quote: "תמיד הסתמכנו על המלצות פה לאוזן. ה-ShieldUp הראו לנו שיש לקוחות שמחפשים אותנו באינטרנט ואנחנו פשוט לא היינו שם. בהדרגה התחלנו לראות פניות שלא הכרנו מקודם.",
               image: "RA"
             },
             {
               name: "דניאל לוי",
-              role: "סמנכ\"ל תפעול פרויקטים ביטחוניים",
-              quote: "הדאטה שלהם על מקב\"טים היא נכס צאן ברזל. במקום לרדוף אחרי לידים קרים, אנחנו מקבלים פניות של 'בואו לתת הצעה'.",
+              role: "מנהל פרויקטים ביטחוניים",
+              quote: "מה שאהבתי זה שהם לא הבטיחו לנו הרים וגבעות. הסבירו בדיוק מה יקרה ומתי, ובסוף זה עבד בערך כמו שאמרו. הפניות שמגיעות הן רלוונטיות — לא סתם אנשים שלחצו בטעות.",
               image: "DL"
             },
             {
               name: "יוסי כהן",
-              role: "מנהל שיווק ומוקד ארצי",
-              quote: "החודש הראשון ללא עלות תפעול היה ההוכחה שהיינו צריכים. המערכת סיננה עבורנו את כל הרעש והשאירה רק עסקאות בשלות.",
+              role: "מנהל שיווק, חברת אבטחה",
+              quote: "ניסינו כמה גורמים לפני. כאן הרגשנו שהם מבינים את הענף ולא צריך להסביר להם מה זה קב\"ט. החודש הראשון בלי עלות עזר לנו לבדוק לפני שהתחייבנו.",
               image: "YC"
             },
             {
               name: "מאיר דורון",
-              role: "בעלים של חברת מערכות אבטחה",
-              quote: "ההבנה שלהם בתחום המיגון (NVR, בקרות, גלאים) עושה את כל ההבדל. הם מדברים בשפה של הלקוחות שלי.",
+              role: "בעלים, חברת מערכות אבטחה",
+              quote: "מה שהפתיע אותי זה שלא הוצרכנו להסביר את המוצרים. הם הגיעו עם ידע על NVR, בקרות כניסה וגלאים — זה חסך הרבה זמן. עדיין בתהליך אבל הכיוון טוב.",
               image: "MD"
             }
           ].map((review, i) => (
@@ -358,10 +358,10 @@ export default function ShieldUpPro() {
       <section className="py-20 relative z-10 container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
-            { icon: <Activity />, label: "דיוק המרת לידים", value: "14.2%", desc: "אופטימיזציית אלגוריתם ייעודית" },
-            { icon: <Target />, label: "בסיס נתוני רכש", value: "85K+", desc: "גישה ישירה לקב'טים ומנהלים" },
-            { icon: <BarChart2 />, label: "תקציבים מנוהלים", value: "₪4M+", desc: "החזר השקעה (ROI) מקסימלי" },
-            { icon: <ShieldCheck />, label: "מותגי מיגון מובילים", value: "30+", desc: "חברות שבחרו לשלוט בשוק" }
+            { icon: <Activity />, label: "דיוק המרת לידים", value: "14.2%", desc: "ממוצע על פני קמפיינים פעילים" },
+            { icon: <Target />, label: "אנשי קשר בענף", value: "3,200+", desc: "קב״טים, מנהלי רכש ומקבלי החלטות" },
+            { icon: <BarChart2 />, label: "תקציבי פרסום מנוהלים", value: "₪1.2M+", desc: "בתהליך גדילה מתמיד" },
+            { icon: <ShieldCheck />, label: "חברות שעבדנו איתן", value: "14+", desc: "בעיקר ענף המיגון והאבטחה" }
           ].map((stat, i) => (
             <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
               className="p-8 bg-white/[0.03] border border-white/10 rounded-[32px] backdrop-blur-xl group hover:border-purple-500/50 transition-all text-right">
