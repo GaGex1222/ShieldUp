@@ -17,10 +17,15 @@ const ADS = [
   { src: "/66a3445ca8c19a9f.png",                      desc: "פרסום ממוקד לפתרונות תשתיות תקשורת" },
 ];
 
+// Card width + gap between every card (including between the two sets).
+// Animating by exactly this many pixels = one full set = perfectly seamless loop.
+const CARD_W = 260;
+const CARD_GAP = 20;
+const ONE_SET_PX = ADS.length * (CARD_W + CARD_GAP); // 7 × 280 = 1960px
+
 function AdsCarousel() {
   const [lightbox, setLightbox] = React.useState<string | null>(null);
-  // Two identical copies side-by-side; CSS animation slides the track left by 50%
-  // then jumps back — perfectly seamless, works on every screen size.
+  // Two identical copies — animation moves exactly ONE_SET_PX to the left then jumps back.
   const track = [...ADS, ...ADS];
 
   return (
@@ -31,26 +36,27 @@ function AdsCarousel() {
         <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#010103] to-transparent z-10" />
         <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#010103] to-transparent z-10" />
 
+        {/* Inject exact-pixel keyframe — no percentage rounding issues */}
         <style>{`
-          @keyframes marquee {
-            0%   { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+          @keyframes marquee-scroll {
+            from { transform: translateX(0px); }
+            to   { transform: translateX(-${ONE_SET_PX}px); }
           }
-          .marquee-track {
+          .marquee-inner {
             display: flex;
-            gap: 20px;
             width: max-content;
-            animation: marquee 22s linear infinite;
+            animation: marquee-scroll 20s linear infinite;
+            will-change: transform;
           }
         `}</style>
 
-        <div className="marquee-track px-6">
+        <div className="marquee-inner">
           {track.map((ad, i) => (
             <button
               key={i}
               onClick={() => setLightbox(ad.src)}
               className="group relative shrink-0 rounded-[24px] overflow-hidden border border-white/10 bg-white/[0.03] focus:outline-none"
-              style={{ width: 260, aspectRatio: '4/5' }}
+              style={{ width: CARD_W, aspectRatio: '4/5', marginRight: CARD_GAP }}
               aria-label={ad.desc}
             >
               <img
@@ -60,7 +66,6 @@ function AdsCarousel() {
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.05]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/5 to-transparent" />
-              {/* Hover overlay */}
               <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/30">
                 <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 text-xs font-bold text-white tracking-wider">
                   לחץ להגדלה
