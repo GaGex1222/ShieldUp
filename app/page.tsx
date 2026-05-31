@@ -1,11 +1,93 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, useSpring, AnimatePresence, useAnimationControls } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, AnimatePresence, useMotionValue, useAnimationFrame } from 'framer-motion';
 import { 
   Target, Zap, BarChart2, ShieldCheck, Mail, Phone, Activity, 
   Radar, Gift, CheckCircle2, Loader2, AlertCircle, TrendingUp, 
   UserCircle2, Quote, ArrowUpRight, Eye, ScanEye 
 } from 'lucide-react';
+
+const ADS = [
+  { src: "/camera_ad.png",                             desc: "אופטימיזציה למעורבות מקסימלית של קב\"טים" },
+  { src: "/alarm_system.png",                          desc: "טרגוט מנהלי רכש וקניינים" },
+  { src: "/bank2.png",                                 desc: "פרסום ממוקד לגופי אבטחה מוסדיים" },
+  { src: "/1.png",                                     desc: "קריאייטיב לענף האינטרקומים והגישה החכמה" },
+  { src: "/3.png",                                     desc: "טרגוט קהל עסקי לפתרונות תקשורת מבנים" },
+  { src: "/ChatGPT_Image_May_31_2026_01_42_09_AM.png", desc: "קריאייטיב לענף המצלמות והאבטחה החכמה" },
+  { src: "/66a3445ca8c19a9f.png",                      desc: "פרסום ממוקד לפתרונות תשתיות תקשורת" },
+];
+
+const CARD_W = 280;
+const GAP    = 20;
+const STRIDE = CARD_W + GAP;          // px per card slot
+const SPEED  = 0.35;                  // px per ms  (~21px/frame @60fps)
+
+function AdsCarousel() {
+  const x           = useMotionValue(0);
+  const dragging     = React.useRef(false);
+  const loopLen      = ADS.length * STRIDE;   // one full set width
+  const items        = [...ADS, ...ADS, ...ADS]; // triple for seamless loop
+
+  // Seed x to the middle copy so we have room to drag either way
+  React.useEffect(() => { x.set(-loopLen); }, [loopLen, x]);
+
+  // Auto-scroll: advances x forward every frame when not dragging
+  useAnimationFrame((_, delta) => {
+    if (dragging.current) return;
+    let next = x.get() - SPEED * delta;
+    // Wrap: if we've scrolled past the 3rd copy start, jump back by one set
+    if (next < -loopLen * 2) next += loopLen;
+    // Wrap: if user drags right too far
+    if (next > 0) next -= loopLen;
+    x.set(next);
+  });
+
+  return (
+    <div className="relative overflow-hidden -mx-6 select-none">
+      {/* Edge fades */}
+      <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#010103] to-transparent z-10" />
+      <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[#010103] to-transparent z-10" />
+
+      <motion.div
+        className="flex cursor-grab active:cursor-grabbing"
+        style={{ x, gap: GAP, paddingLeft: 24, paddingRight: 24 }}
+        drag="x"
+        dragConstraints={{ left: -loopLen * 2.2, right: loopLen * 0.2 }}
+        dragElastic={0.08}
+        dragMomentum={true}
+        onDragStart={() => { dragging.current = true; }}
+        onDragEnd={() => {
+          // Short delay so momentum settles before auto-scroll resumes
+          setTimeout(() => { dragging.current = false; }, 800);
+        }}
+      >
+        {items.map((ad, i) => (
+          <div
+            key={i}
+            className="group relative shrink-0 rounded-[24px] overflow-hidden border border-white/10 bg-white/[0.03]"
+            style={{ width: CARD_W, aspectRatio: '4/5' }}
+          >
+            <img
+              src={ad.src}
+              alt=""
+              draggable={false}
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
+            <div className="absolute bottom-5 right-5 left-5 text-right">
+              <p className="text-white/50 text-[11px] font-medium leading-snug">{ad.desc}</p>
+            </div>
+          </div>
+        ))}
+      </motion.div>
+
+      {/* Drag hint — fades out after first interaction */}
+      <p className="text-center text-white/20 text-xs font-medium mt-5 tracking-widest pointer-events-none">
+        ← גרור לגלילה →
+      </p>
+    </div>
+  );
+}
 
 export default function ShieldUpPro() {
   const { scrollYProgress } = useScroll();
@@ -192,73 +274,7 @@ export default function ShieldUpPro() {
           </div>
         </div>
 
-        {(() => {
-          const ads = [
-            { src: "/camera_ad.png",                              desc: "אופטימיזציה למעורבות מקסימלית של קב\"טים" },
-            { src: "/alarm_system.png",                           desc: "טרגוט מנהלי רכש וקניינים" },
-            { src: "/bank2.png",                                  desc: "פרסום ממוקד לגופי אבטחה מוסדיים" },
-            { src: "/1.png",                                      desc: "קריאייטיב לענף האינטרקומים והגישה החכמה" },
-            { src: "/3.png",                                      desc: "טרגוט קהל עסקי לפתרונות תקשורת מבנים" },
-            { src: "/ChatGPT_Image_May_31_2026_01_42_09_AM.png",  desc: "קריאייטיב לענף המצלמות והאבטחה החכמה" },
-            { src: "/66a3445ca8c19a9f.png",                       desc: "פרסום ממוקד לפתרונות תשתיות תקשורת" },
-          ];
-
-          const doubled = [...ads, ...ads];
-
-          const AdCard = ({ ad }: { ad: typeof ads[0] }) => (
-            <div className="group relative shrink-0 w-[260px] sm:w-[300px] aspect-[4/5] bg-white/[0.03] border border-white/10 rounded-[28px] overflow-hidden cursor-crosshair">
-              <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
-                <img src={ad.src} alt="" className="w-full h-full object-cover" />
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-              <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <motion.div
-                  animate={{ top: ['0%', '100%', '0%'] }}
-                  transition={{ duration: 3.5, repeat: Infinity, ease: "linear" }}
-                  className="absolute left-0 right-0 h-[2px] bg-purple-500/60 shadow-[0_0_12px_rgba(168,85,247,0.9)] z-20"
-                />
-              </div>
-              <div className="absolute bottom-6 right-6 left-6 text-right">
-                <p className="text-white/50 text-xs font-medium leading-snug">{ad.desc}</p>
-              </div>
-              <div className="absolute top-5 left-5 border-t border-l border-white/20 w-3 h-3" />
-              <div className="absolute bottom-5 right-5 border-b border-r border-white/20 w-3 h-3" />
-            </div>
-          );
-
-          const TrackRow = ({ reverse = false }: { reverse?: boolean }) => {
-            const controls = useAnimationControls();
-            const from = reverse ? '-50%' : '0%';
-            const to   = reverse ? '0%'   : '-50%';
-            React.useEffect(() => {
-              controls.start({ x: [from, to], transition: { duration: 30, repeat: Infinity, ease: 'linear', repeatType: 'loop' } });
-            }, []);
-            return (
-              <div
-                className="overflow-hidden relative"
-                onMouseEnter={() => controls.stop()}
-                onMouseLeave={() => controls.start({ x: [from, to], transition: { duration: 30, repeat: Infinity, ease: 'linear', repeatType: 'loop' } })}
-              >
-                <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#010103] to-transparent z-10 pointer-events-none" />
-                <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#010103] to-transparent z-10 pointer-events-none" />
-                <motion.div
-                  className="flex gap-6 w-max"
-                  animate={controls}
-                  style={{ willChange: 'transform' }}
-                >
-                  {doubled.map((ad, i) => <AdCard key={i} ad={ad} />)}
-                </motion.div>
-              </div>
-            );
-          };
-
-          return (
-            <div className="space-y-6 -mx-6">
-              <TrackRow />
-              <TrackRow reverse />
-            </div>
-          );
-        })()}
+        <AdsCarousel />
       </section>
 
       {/* --- SECTION 3: PERFORMANCE ANALYTICS --- */}
@@ -402,7 +418,7 @@ export default function ShieldUpPro() {
                 gald12123434@gmail.com <div className="p-3 bg-white/5 rounded-xl group-hover:bg-purple-600 transition-all"><Mail size={24} /></div>
               </div>
               <div className="flex items-center justify-end gap-5 text-xl font-bold text-white/40 hover:text-white transition-colors cursor-pointer group">
-                050-6525235 <div className="p-3 bg-white/5 rounded-xl group-hover:bg-purple-600 transition-all"><Phone size={24} /></div>
+                054-420-9789 <div className="p-3 bg-white/5 rounded-xl group-hover:bg-purple-600 transition-all"><Phone size={24} /></div>
               </div>
             </div>
           </div>
