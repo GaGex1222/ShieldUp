@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, useSpring, AnimatePresence, useMotionValue, useAnimationFrame } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import { 
   Target, Zap, BarChart2, ShieldCheck, Mail, Phone, Activity, 
   Radar, Gift, CheckCircle2, Loader2, AlertCircle, TrendingUp, 
@@ -17,75 +17,96 @@ const ADS = [
   { src: "/66a3445ca8c19a9f.png",                      desc: "פרסום ממוקד לפתרונות תשתיות תקשורת" },
 ];
 
-const CARD_W = 280;
-const GAP    = 20;
-const STRIDE = CARD_W + GAP;          // px per card slot
-const SPEED  = 0.35;                  // px per ms  (~21px/frame @60fps)
-
 function AdsCarousel() {
-  const x           = useMotionValue(0);
-  const dragging     = React.useRef(false);
-  const loopLen      = ADS.length * STRIDE;   // one full set width
-  const items        = [...ADS, ...ADS, ...ADS]; // triple for seamless loop
-
-  // Seed x to the middle copy so we have room to drag either way
-  React.useEffect(() => { x.set(-loopLen); }, [loopLen, x]);
-
-  // Auto-scroll: advances x forward every frame when not dragging
-  useAnimationFrame((_, delta) => {
-    if (dragging.current) return;
-    let next = x.get() - SPEED * delta;
-    // Wrap: if we've scrolled past the 3rd copy start, jump back by one set
-    if (next < -loopLen * 2) next += loopLen;
-    // Wrap: if user drags right too far
-    if (next > 0) next -= loopLen;
-    x.set(next);
-  });
+  const [lightbox, setLightbox] = React.useState<string | null>(null);
+  // Two identical copies side-by-side; CSS animation slides the track left by 50%
+  // then jumps back — perfectly seamless, works on every screen size.
+  const track = [...ADS, ...ADS];
 
   return (
-    <div className="relative overflow-hidden -mx-6 select-none">
-      {/* Edge fades */}
-      <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#010103] to-transparent z-10" />
-      <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[#010103] to-transparent z-10" />
+    <>
+      {/* ── Marquee ── */}
+      <div className="relative overflow-hidden -mx-6">
+        {/* Edge fades */}
+        <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#010103] to-transparent z-10" />
+        <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#010103] to-transparent z-10" />
 
-      <motion.div
-        className="flex cursor-grab active:cursor-grabbing"
-        style={{ x, gap: GAP, paddingLeft: 24, paddingRight: 24 }}
-        drag="x"
-        dragConstraints={{ left: -loopLen * 2.2, right: loopLen * 0.2 }}
-        dragElastic={0.08}
-        dragMomentum={true}
-        onDragStart={() => { dragging.current = true; }}
-        onDragEnd={() => {
-          // Short delay so momentum settles before auto-scroll resumes
-          setTimeout(() => { dragging.current = false; }, 800);
-        }}
-      >
-        {items.map((ad, i) => (
-          <div
-            key={i}
-            className="group relative shrink-0 rounded-[24px] overflow-hidden border border-white/10 bg-white/[0.03]"
-            style={{ width: CARD_W, aspectRatio: '4/5' }}
+        <style>{`
+          @keyframes marquee {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+          .marquee-track {
+            display: flex;
+            gap: 20px;
+            width: max-content;
+            animation: marquee 22s linear infinite;
+          }
+        `}</style>
+
+        <div className="marquee-track px-6">
+          {track.map((ad, i) => (
+            <button
+              key={i}
+              onClick={() => setLightbox(ad.src)}
+              className="group relative shrink-0 rounded-[24px] overflow-hidden border border-white/10 bg-white/[0.03] focus:outline-none"
+              style={{ width: 260, aspectRatio: '4/5' }}
+              aria-label={ad.desc}
+            >
+              <img
+                src={ad.src}
+                alt={ad.desc}
+                draggable={false}
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.05]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/5 to-transparent" />
+              {/* Hover overlay */}
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/30">
+                <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 text-xs font-bold text-white tracking-wider">
+                  לחץ להגדלה
+                </div>
+              </div>
+              <div className="absolute bottom-5 right-5 left-5 text-right">
+                <p className="text-white/50 text-[11px] font-medium leading-snug">{ad.desc}</p>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Lightbox ── */}
+      <AnimatePresence>
+        {lightbox && (
+          <motion.div
+            key="lb"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-[999] flex items-center justify-center bg-black/90 backdrop-blur-md p-4"
+            onClick={() => setLightbox(null)}
           >
-            <img
-              src={ad.src}
+            <motion.img
+              src={lightbox}
               alt=""
-              draggable={false}
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+              initial={{ scale: 0.88, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.88, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 280, damping: 28 }}
+              className="max-h-[90vh] max-w-[90vw] rounded-[28px] shadow-2xl object-contain"
+              onClick={(e) => e.stopPropagation()}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
-            <div className="absolute bottom-5 right-5 left-5 text-right">
-              <p className="text-white/50 text-[11px] font-medium leading-snug">{ad.desc}</p>
-            </div>
-          </div>
-        ))}
-      </motion.div>
-
-      {/* Drag hint — fades out after first interaction */}
-      <p className="text-center text-white/20 text-xs font-medium mt-5 tracking-widest pointer-events-none">
-        ← גרור לגלילה →
-      </p>
-    </div>
+            {/* Close button */}
+            <button
+              onClick={() => setLightbox(null)}
+              className="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white text-xl font-bold transition-colors"
+            >
+              ✕
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
 
