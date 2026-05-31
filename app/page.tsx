@@ -145,7 +145,7 @@ export default function ShieldUpPro() {
           {[
             {
               title: "דאטה מפולחת לקב\"טים",
-              desc: "אנחנו מחזיקים בגישה ישירה למקבלי ההחלטות הגדולים בישראל - מקב\"טים של רשתות קמעונאות, מנהלי תפעול וגופי ביטחון.",
+              desc: "אנחנו יודעים לטרגט קב\"טים — לא שיש לנו גישה ישירה אליהם, אלא שאנחנו יודעים בדיוק אילו פרסומות יגיעו אליהם ואיך.",
               icon: <Radar className="w-10 h-10" />
             },
             {
@@ -194,11 +194,13 @@ export default function ShieldUpPro() {
 
         {(() => {
           const ads = [
-            { src: "/camera_ad.png",       desc: "אופטימיזציה למעורבות מקסימלית של קב\"טים" },
-            { src: "/alarm_system.png",    desc: "טרגוט מנהלי רכש וקניינים" },
-            { src: "/fingerprint_lock.png",desc: "קריאייטיב חודר שוק מוסדי" },
-            { src: "/bank1.png",           desc: "חדירה לסקטור הפיננסי והבנקאי" },
-            { src: "/bank2.png",           desc: "פרסום ממוקד לגופי אבטחה מוסדיים" },
+            { src: "/camera_ad.png",                              desc: "אופטימיזציה למעורבות מקסימלית של קב\"טים" },
+            { src: "/alarm_system.png",                           desc: "טרגוט מנהלי רכש וקניינים" },
+            { src: "/bank2.png",                                  desc: "פרסום ממוקד לגופי אבטחה מוסדיים" },
+            { src: "/1.png",                                      desc: "קריאייטיב לענף האינטרקומים והגישה החכמה" },
+            { src: "/3.png",                                      desc: "טרגוט קהל עסקי לפתרונות תקשורת מבנים" },
+            { src: "/ChatGPT_Image_May_31_2026_01_42_09_AM.png",  desc: "קריאייטיב לענף המצלמות והאבטחה החכמה" },
+            { src: "/66a3445ca8c19a9f.png",                       desc: "פרסום ממוקד לפתרונות תשתיות תקשורת" },
           ];
 
           const AdCard = ({ ad, i }: { ad: typeof ads[0], i: number }) => (
@@ -237,7 +239,11 @@ export default function ShieldUpPro() {
               </div>
               {/* Row 2 — 2 cards centered */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 lg:w-2/3 mx-auto">
-                {ads.slice(3).map((ad, i) => <AdCard key={i + 3} ad={ad} i={i + 3} />)}
+                {ads.slice(3, 5).map((ad, i) => <AdCard key={i + 3} ad={ad} i={i + 3} />)}
+              </div>
+              {/* Row 3 — 2 cards centered */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 lg:w-2/3 mx-auto">
+                {ads.slice(5).map((ad, i) => <AdCard key={i + 5} ad={ad} i={i + 5} />)}
               </div>
             </div>
           );
