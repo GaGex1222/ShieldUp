@@ -31,7 +31,7 @@ function AdsCarousel() {
   return (
     <>
       {/* ── Marquee ── */}
-      <div className="relative overflow-hidden -mx-6">
+      <div className="relative overflow-hidden -mx-6" dir="ltr">
         {/* Edge fades */}
         <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#010103] to-transparent z-10" />
         <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#010103] to-transparent z-10" />
