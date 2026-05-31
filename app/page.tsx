@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, AnimatePresence, useAnimationControls } from 'framer-motion';
 import { 
   Target, Zap, BarChart2, ShieldCheck, Mail, Phone, Activity, 
   Radar, Gift, CheckCircle2, Loader2, AlertCircle, TrendingUp, 
@@ -203,48 +203,59 @@ export default function ShieldUpPro() {
             { src: "/66a3445ca8c19a9f.png",                       desc: "פרסום ממוקד לפתרונות תשתיות תקשורת" },
           ];
 
-          const AdCard = ({ ad, i }: { ad: typeof ads[0], i: number }) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="group relative aspect-[4/5] bg-white/[0.03] border border-white/10 rounded-[32px] overflow-hidden cursor-crosshair"
-            >
-              <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
+          const doubled = [...ads, ...ads];
+
+          const AdCard = ({ ad }: { ad: typeof ads[0] }) => (
+            <div className="group relative shrink-0 w-[260px] sm:w-[300px] aspect-[4/5] bg-white/[0.03] border border-white/10 rounded-[28px] overflow-hidden cursor-crosshair">
+              <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
                 <img src={ad.src} alt="" className="w-full h-full object-cover" />
               </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
-              <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+              <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <motion.div
                   animate={{ top: ['0%', '100%', '0%'] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                  className="absolute left-0 right-0 h-[2px] bg-purple-500/50 shadow-[0_0_15px_rgba(168,85,247,0.8)] z-20"
+                  transition={{ duration: 3.5, repeat: Infinity, ease: "linear" }}
+                  className="absolute left-0 right-0 h-[2px] bg-purple-500/60 shadow-[0_0_12px_rgba(168,85,247,0.9)] z-20"
                 />
               </div>
-              <div className="absolute bottom-8 right-8 left-8 text-right">
-                <p className="text-white/40 text-xs mt-2 font-medium">{ad.desc}</p>
+              <div className="absolute bottom-6 right-6 left-6 text-right">
+                <p className="text-white/50 text-xs font-medium leading-snug">{ad.desc}</p>
               </div>
-              <div className="absolute top-6 left-6 border-t border-l border-white/20 w-4 h-4" />
-              <div className="absolute bottom-6 right-6 border-b border-r border-white/20 w-4 h-4" />
-            </motion.div>
+              <div className="absolute top-5 left-5 border-t border-l border-white/20 w-3 h-3" />
+              <div className="absolute bottom-5 right-5 border-b border-r border-white/20 w-3 h-3" />
+            </div>
           );
 
+          const TrackRow = ({ reverse = false }: { reverse?: boolean }) => {
+            const controls = useAnimationControls();
+            const from = reverse ? '-50%' : '0%';
+            const to   = reverse ? '0%'   : '-50%';
+            React.useEffect(() => {
+              controls.start({ x: [from, to], transition: { duration: 30, repeat: Infinity, ease: 'linear', repeatType: 'loop' } });
+            }, []);
+            return (
+              <div
+                className="overflow-hidden relative"
+                onMouseEnter={() => controls.stop()}
+                onMouseLeave={() => controls.start({ x: [from, to], transition: { duration: 30, repeat: Infinity, ease: 'linear', repeatType: 'loop' } })}
+              >
+                <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#010103] to-transparent z-10 pointer-events-none" />
+                <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#010103] to-transparent z-10 pointer-events-none" />
+                <motion.div
+                  className="flex gap-6 w-max"
+                  animate={controls}
+                  style={{ willChange: 'transform' }}
+                >
+                  {doubled.map((ad, i) => <AdCard key={i} ad={ad} />)}
+                </motion.div>
+              </div>
+            );
+          };
+
           return (
-            <div className="space-y-8">
-              {/* Row 1 — 3 cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                {ads.slice(0, 3).map((ad, i) => <AdCard key={i} ad={ad} i={i} />)}
-              </div>
-              {/* Row 2 — 2 cards centered */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 lg:w-2/3 mx-auto">
-                {ads.slice(3, 5).map((ad, i) => <AdCard key={i + 3} ad={ad} i={i + 3} />)}
-              </div>
-              {/* Row 3 — 2 cards centered */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 lg:w-2/3 mx-auto">
-                {ads.slice(5).map((ad, i) => <AdCard key={i + 5} ad={ad} i={i + 5} />)}
-              </div>
+            <div className="space-y-6 -mx-6">
+              <TrackRow />
+              <TrackRow reverse />
             </div>
           );
         })()}
