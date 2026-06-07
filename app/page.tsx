@@ -8,20 +8,19 @@ import {
 } from 'lucide-react';
 
 const ADS = [
-  { src: "/camera_ad.png",                             desc: "אופטימיזציה למעורבות מקסימלית של קב\"טים" },
-  { src: "/alarm_system.png",                          desc: "טרגוט מנהלי רכש וקניינים" },
-  { src: "/bank2.png",                                 desc: "פרסום ממוקד לגופי אבטחה מוסדיים" },
-  { src: "/1.png",                                     desc: "קריאייטיב לענף האינטרקומים והגישה החכמה" },
-  { src: "/3.png",                                     desc: "טרגוט קהל עסקי לפתרונות תקשורת מבנים" },
-  { src: "/ChatGPT_Image_May_31_2026_01_42_09_AM.png", desc: "קריאייטיב לענף המצלמות והאבטחה החכמה" },
-  { src: "/66a3445ca8c19a9f.png",                      desc: "פרסום ממוקד לפתרונות תשתיות תקשורת" },
+  { src: "/camera_ad.png",                                        desc: "אופטימיזציה למעורבות מקסימלית של קב\"טים" },
+  { src: "/alarm_system.png",                                     desc: "טרגוט מנהלי רכש וקניינים" },
+  { src: "/1-ezremove.png",                                       desc: "קריאייטיב לענף האינטרקומים והגישה החכמה" },
+  { src: "/ChatGPT_Image_May_31_2026_01_42_09_AM.png",            desc: "קריאייטיב לענף המצלמות והאבטחה החכמה" },
+  { src: "/66a3445ca8c19a9f.png",                                 desc: "פרסום ממוקד לפתרונות תשתיות תקשורת" },
+  { src: "/ChatGPT Image Jun 7, 2026, 11_47_43 AM.png",          desc: "פרסום ממוקד לפתרונות מצלמות ואבטחה מתקדמת" },
 ];
 
 // Card width + gap between every card (including between the two sets).
 // Animating by exactly this many pixels = one full set = perfectly seamless loop.
 const CARD_W = 260;
 const CARD_GAP = 20;
-const ONE_SET_PX = ADS.length * (CARD_W + CARD_GAP); // 7 × 280 = 1960px
+const ONE_SET_PX = ADS.length * (CARD_W + CARD_GAP); // 6 × 280 = 1680px
 
 function AdsCarousel() {
   const [lightbox, setLightbox] = React.useState<string | null>(null);
