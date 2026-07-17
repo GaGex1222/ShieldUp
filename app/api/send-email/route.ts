@@ -15,7 +15,7 @@ export async function POST(req: Request) {
 
     await resend.emails.send({
       from: 'ShieldUp Pro <galdadon@galdadon.com>',
-      to: ['gald12123434@gmail.com', 'Avraon200@gmail.com'],
+      to: ['gald12123434@gmail.com', 'Avraon200@gmail.com', 'ag@digitizedup.com'],
       subject: `מבצעי: ליד חדש מ-${fullName}`,
       html: `
         <!DOCTYPE html>
