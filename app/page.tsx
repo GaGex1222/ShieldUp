@@ -440,7 +440,7 @@ export default function ShieldUpPro() {
             <p className="text-white/30 text-xl mb-12 font-bold underline underline-offset-8 decoration-purple-500">בחודש הראשון - העלות תפעול היא עלינו!</p>
             <div className="space-y-6">
               <div className="flex items-center justify-end gap-5 text-xl font-bold text-white/40 hover:text-white transition-colors cursor-pointer group">
-                gald12123434@gmail.com <div className="p-3 bg-white/5 rounded-xl group-hover:bg-purple-600 transition-all"><Mail size={24} /></div>
+                ag@digitizedup.com <div className="p-3 bg-white/5 rounded-xl group-hover:bg-purple-600 transition-all"><Mail size={24} /></div>
               </div>
               <div className="flex items-center justify-end gap-5 text-xl font-bold text-white/40 hover:text-white transition-colors cursor-pointer group">
                 054-420-9789 <div className="p-3 bg-white/5 rounded-xl group-hover:bg-purple-600 transition-all"><Phone size={24} /></div>
